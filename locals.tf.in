@@ -1,0 +1,9 @@
+# copy this to locals.tf and complete at least the project_name
+locals {
+  project_name = "{required}"
+  overrides = {
+    # bucket_region        = "europe-west2"
+    # billing_account_name = "My Billing Account"
+    # additional_apis      = []
+  }
+}
