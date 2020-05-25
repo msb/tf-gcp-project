@@ -15,6 +15,8 @@ when creating infrastructure. To that end, this repo does the following:
 - Creates a project service account and retrieve it's credentials.
   All further project resources are managed with this account.
 
+Some experience with GCP, Docker, and Terrform would be useful when using this resource.
+
 To bootstrap your local environment ready to create one or more projects:
 
 - [Signup for a GCP account](https://cloud.google.com/gcp), if you don't already have one. There's
@@ -29,14 +31,15 @@ To bootstrap your local environment ready to create one or more projects:
   so that they are in a form usabled by terraform).
 
 The `tf-gcp-project.sh` script is provided to simplify the running of terraform. An example of it's
-usage might be: `./tf-gcp-project.sh my-cluster init` - initialising a project intended to house a cluster.
+usage might be: `./tf-gcp-project.sh my-vm init` - initialising a project intended to house a
+cluster.
 
 Then to create the project:
 
 - Copy locals.tf.in -> locals.tf and set the project's name along with any other appropriate
   overrides.
-- Run the two standard [terraform](https://www.terraform.io/docs/index.html) commnds `init` and
+- Run the two standard [terraform](https://www.terraform.io/docs/index.html) commands `init` and
   `apply`.
 - Once the project is created you can use the `tf-gcp-project.output.sh` script that wraps the
-  `output` command and creates configuration to be used by another TF repo creating project
-  resources.
+  terraform `output` command and creates configuration to be used by another TF repo creating
+  project resources.
