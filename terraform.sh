@@ -27,4 +27,4 @@ ACCOUNT_SLUG=$(echo $ACCOUNT_EMAIL | tr A-Z a-z | sed -r 's/[^a-z0-9]+/-/g')
 docker run --interactive --tty --rm \
   --volumes-from gcloud-$ACCOUNT_SLUG \
   --volume $TF_PROJECT_VOLUME-project-tf:/terraform \
-  --volume $PWD:/project msb140610/terraform-runner:1.0 $@
+  --volume $PWD:/project msb140610/terraform-runner:1.1 $@
