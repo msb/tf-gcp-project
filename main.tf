@@ -1,18 +1,18 @@
 # Use the default trial billing account name unless one has been specified
 data "google_billing_account" "acct" {
-  display_name = lookup(local.overrides, "billing_account_name", "My Billing Account")
+  display_name = var.billing_account_name
   open         = true
 }
 
 # The project id -  a slug of `project_name` and a random token
 resource "random_id" "project_id" {
   byte_length = 3
-  prefix      = "${replace(trimspace(lower(substr(local.project_name, 0, 23))), "/[^a-z0-9]+/", "-")}-"
+  prefix      = "${replace(trimspace(lower(substr(var.project_name, 0, 23))), "/[^a-z0-9]+/", "-")}-"
 }
 
 # A project linked to the defined billing account
 resource "google_project" "project" {
-  name            = local.project_name
+  name            = var.project_name
   project_id      = random_id.project_id.hex
   billing_account = data.google_billing_account.acct.id
 }
@@ -34,16 +34,12 @@ resource "google_project_service" "cloudresourcemanager_api" {
   service = "cloudresourcemanager.googleapis.com"
 }
 
-locals {
-  additional_apis = lookup(local.overrides, "additional_apis", [])
-}
-
 # Enable additional API's required for other project resources
 # (the project service account doesn't seem to have permission)
 resource "google_project_service" "additional_apis" {
-  count   = length(local.additional_apis)
+  count   = length(var.additional_apis)
   project = google_project.project.project_id
-  service = local.additional_apis[count.index]
+  service = var.additional_apis[count.index]
 }
 
 # The name of the state bucket
@@ -56,7 +52,7 @@ resource "random_id" "state_bucket" {
 resource "google_storage_bucket" "state_bucket" {
   project  = google_project.project.project_id
   name     = random_id.state_bucket.hex
-  location = lookup(local.overrides, "bucket_region", "europe-west2")
+  location = var.bucket_region
 
   versioning {
     enabled = true
