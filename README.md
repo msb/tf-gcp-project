@@ -34,7 +34,7 @@ a project intended to contain a VM and storing state in a volume named `my-vm-pr
 Now to create the project:
 - create a folder
 - copy the 
-  [example files in the usage folder](https://github.com/msb/tf-gcp-project/blob/master/usage.tf)
+  [example files in the usage folder](https://github.com/msb/tf-gcp-project/tree/master/usage)
   into it
 - update them with a descriptive project and module name
 
@@ -59,3 +59,17 @@ possible parameters. Then to deploy the run the two standard
 Once the project is created you can use the `terraform.output.sh` script that wraps the terraform
 `output` command and creates configuration to be used by another TF repo creating project
 resources.
+
+## Development
+
+When developing the module it's useful to test your changes on a branch so as not to impact
+existing consumers. Say, for example, that you've pushed new changes to `my-dev-branch`. You can
+test these changes by using the following `source` in your module configuration:
+
+```tf
+module "cluster_project" {
+  source = "git::https://github.com/msb/tf-gcp-project.git?ref=my-dev-branch"
+
+  ...
+}
+```
