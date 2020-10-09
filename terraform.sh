@@ -4,9 +4,6 @@
 
 USAGE="Usage: terraform.sh <gcp-account-email> <tf-project-volume> <TF command>..."
 
-# Exit on errors and log commands
-set -xe
-
 # Function which will die with an error message.
 function die() {
     echo -e "\e[31m" $@ "\e[39m" >&2; exit 1
@@ -21,6 +18,9 @@ TF_PROJECT_VOLUME=$1
 [ -z "${TF_PROJECT_VOLUME}" ] && die $USAGE 
 
 shift
+
+# Exit on errors and log commands
+set -xe
 
 ACCOUNT_SLUG=$(echo $ACCOUNT_EMAIL | tr A-Z a-z | sed -r 's/[^a-z0-9]+/-/g')
 

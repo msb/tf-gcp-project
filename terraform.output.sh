@@ -8,9 +8,6 @@
 
 USAGE="Usage: terraform.output.sh <gcp-account-email> <tf-volume> <output-path>"
 
-# Exit on errors and log commands
-set -e
-
 # Function which will die with an error message.
 function die() {
     echo -e "\e[31m" $@ "\e[39m" >&2; exit 1
@@ -27,6 +24,9 @@ OUTPUT_PATH=$3
 
 command -v jq >/dev/null 2>&1
 [ $? -eq 1 ] && die "this script requires 'jq' - please install"
+
+# Exit on errors and log commands
+set -xe
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
