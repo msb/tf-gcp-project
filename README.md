@@ -23,13 +23,14 @@ To bootstrap your local environment ready to create one or more projects:
   a free trial and, at time of writing, it's quite generous (credits $300 for 12 months - whichever
   finishes first).
 - Retrieve your GCP account's credentials by running: 
-  `./create-account-credentials.sh <gcp-account-email>` and following the instructions. The 
-  credentials are saved in a volume of the container.
+  [`./create-account-credentials.sh <gcp-account-email>`](https://github.com/msb/tf-gcp-project/blob/master/create-account-credentials.sh)
+  and following the instructions. The  credentials are saved in a volume of the container.
 
-The `terraform.sh` script is provided to simplify the running of terraform by automatically
-providing the credentials in the last step to terraform and storing any state in a docker volume.
-An example of it's usage might be: `./terraform.sh <gcp-account-email> my-vm init` -  initialising
-a project intended to contain a VM and storing state in a volume named `my-vm-project-tf`.
+The [`terraform.sh`](https://github.com/msb/tf-gcp-project/blob/master/terraform.sh) script is
+provided to simplify the running of terraform by automatically providing the credentials in the
+last step to terraform and storing any state in a docker volume. An example of it's usage might be:
+`./terraform.sh <gcp-account-email> my-vm init` -  initialising a project intended to contain a VM
+and storing state in a volume named `my-vm-project-tf`.
 
 Now to create the project:
 - create a folder
@@ -56,9 +57,10 @@ See the [`variables.tf`](https://github.com/msb/tf-gcp-project/blob/master/varia
 possible parameters. Then to deploy the run the two standard
 [terraform](https://www.terraform.io/docs/index.html) commands `init` followed by `apply`.
 
-Once the project is created you can use the `terraform.output.sh` script that wraps the terraform
-`output` command and creates configuration to be used by another TF repo creating project
-resources.
+Once the project is created you can use the
+[`terraform.output.sh`](https://github.com/msb/tf-gcp-project/blob/master/terraform.output.sh)
+script that wraps the terraform `output` command and creates configuration to be used by another TF
+repo creating project resources.
 
 ## Development
 
