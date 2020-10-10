@@ -30,7 +30,8 @@ The [`terraform.sh`](https://github.com/msb/tf-gcp-project/blob/master/terraform
 provided to simplify the running of terraform by automatically providing the credentials in the
 last step to terraform and storing any state in a docker volume. An example of it's usage might be:
 `./terraform.sh <gcp-account-email> my-vm init` -  initialising a project intended to contain a VM
-and storing state in a volume named `my-vm-project-tf`.
+and storing state in a volume named `my-vm-project-tf`. Note that the script will also take a
+backup of the docker volume, if `DOCKER_VOLUME_BACKUPS` is set.
 
 Now to create the project:
 - create a folder

@@ -24,7 +24,15 @@ set -xe
 
 ACCOUNT_SLUG=$(echo $ACCOUNT_EMAIL | tr A-Z a-z | sed -r 's/[^a-z0-9]+/-/g')
 
+VOLUME=$TF_PROJECT_VOLUME-project-tf
+
 docker run --interactive --tty --rm \
   --volumes-from gcloud-$ACCOUNT_SLUG \
-  --volume $TF_PROJECT_VOLUME-project-tf:/terraform \
+  --volume $VOLUME:/terraform \
   --volume $PWD:/project msb140610/terraform-runner:1.1 $@
+
+# If DOCKER_VOLUME_BACKUPS is set, then backup the volume.
+# To restore follow: https://hub.docker.com/r/loomchild/volume-backup
+[ -n "${DOCKER_VOLUME_BACKUPS}" ] && docker run --rm \
+  --volume $VOLUME:/volume --volume $DOCKER_VOLUME_BACKUPS:/backup \
+  loomchild/volume-backup backup docker-volume-$VOLUME
