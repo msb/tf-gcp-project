@@ -33,6 +33,8 @@ docker run --interactive --tty --rm \
 
 # If DOCKER_VOLUME_BACKUPS is set, then backup the volume.
 # To restore follow: https://hub.docker.com/r/loomchild/volume-backup
-[ -n "${DOCKER_VOLUME_BACKUPS}" ] && docker run --rm \
-  --volume $VOLUME:/volume --volume $DOCKER_VOLUME_BACKUPS:/backup \
+if [ -n "${DOCKER_VOLUME_BACKUPS}" ]
+  then
+	docker run --rm --volume $VOLUME:/volume --volume $DOCKER_VOLUME_BACKUPS:/backup \
   loomchild/volume-backup backup docker-volume-$VOLUME
+fi
