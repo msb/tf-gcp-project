@@ -30,6 +30,9 @@ set -xe
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+# disable volume backup
+export DOCKER_VOLUME_BACKUPS=
+
 # Output the SA private key file (`jq` is required to unescape the JSON)
 $DIR/terraform.sh $ACCOUNT_EMAIL $TF_VOLUME output -json service_account_credentials | jq -rc . \
   > $OUTPUT_PATH/service_account_credentials.json 
