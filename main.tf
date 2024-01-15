@@ -17,17 +17,6 @@ resource "google_project" "project" {
   billing_account = data.google_billing_account.acct.id
 }
 
-# A delay of 1 minute while project creation comes through the pipes
-# [TODO: this can be removed in v3.23.0](https://github.com/terraform-providers/terraform-provider-google/issues/6377)
-resource "null_resource" "delay" {
-  provisioner "local-exec" {
-    command = "sleep 60"
-  }
-  triggers = {
-    "project" = "${google_project.project.id}"
-  }
-}
-
 # Enable cloudresourcemanager API for the project service account
 resource "google_project_service" "cloudresourcemanager_api" {
   project = google_project.project.project_id
@@ -64,7 +53,6 @@ resource "google_service_account" "owner" {
   project      = google_project.project.project_id
   account_id   = "terraform-admin"
   display_name = "Project Scoped Terraform Service Account"
-  depends_on = [null_resource.delay]
 }
 
 # The project service account must have the "roles/owner" role.
